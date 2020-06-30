@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import {Error} from './Error'
 
-export const Pregunta = ({setRestante,setPresupuesto}) => {
+export const Pregunta = ({setRestante,setPresupuesto, setPregunta}) => {
     // definir el state
     const [cantidad, setCantidad] = useState(0)
     const [error, setError] = useState(false)
@@ -22,8 +22,10 @@ export const Pregunta = ({setRestante,setPresupuesto}) => {
         }
         // si se pasa la validacion
         setError(false)
-        setPresupuesto()
-        setRestante()
+        setPresupuesto(cantidad)
+        setRestante(cantidad)
+        // con esto quitamos el campo de presupuesto
+        setPregunta(false)
     }
 
     return (

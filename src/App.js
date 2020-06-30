@@ -1,4 +1,4 @@
-import React,{useState}  from 'react';
+import React,{useState, useEffect}  from 'react';
 import { Pregunta } from './components/Pregunta';
 import { Formulario } from './components/Formulario';
 import {Listado} from './components/Listado'
@@ -18,11 +18,24 @@ function App() {
   // State para agregar gastos
   const [gastos, setGastos] = useState([])
 
-  // funcion para agregar un gasto nuevo
-  const agregarNuevoGasto = gasto =>{
-    setGastos([...gastos,gasto])
-  }
+  // State para hook de use effect y poder poner los gastos en pantalla
+  const [gasto, setGasto] = useState({})
 
+  // 
+  const [crearGasto, setCrearGasto] = useState(false)
+
+  // useEffect que actualiza el restante
+  useEffect(()=>{
+    if(crearGasto){
+      setGastos([...gastos,gasto])
+      //Resta del presupuesto 
+      const presupuestoRestante = restante - gasto.cantidad
+      setRestante(presupuestoRestante )
+      // Resetear a false
+      setCrearGasto(false)
+    }
+    // las dependencias son todas las variables que esta ocupando el useEffect
+  },[gasto,gastos,crearGasto,restante])
 
   return (
     <div className="container">
@@ -42,7 +55,8 @@ function App() {
               <div className="row">
                 <div className="one-half column">
                   <Formulario 
-                    agregarNuevoGasto={agregarNuevoGasto}
+                    setGasto={setGasto}
+                    setCrearGasto={setCrearGasto}
                   />
                 </div>
                 <div className="one-half column">

@@ -1,6 +1,7 @@
 import React,{useState}  from 'react';
 import { Pregunta } from './components/Pregunta';
 import { Formulario } from './components/Formulario';
+import {Listado} from './components/Listado'
 
 function App() {
   // estado para definir el presupuesto
@@ -11,6 +12,15 @@ function App() {
 
   // State para hacer la carga condicional de componentes(mostar uno u otro componenete)
   const [mostarpregunta, setPregunta] = useState(true)
+
+  // State para agregar gastos
+  const [gastos, setGastos] = useState([])
+
+  // funcion para agregar un gasto nuevo
+  const agregarNuevoGasto = gasto =>{
+    setGastos([...gastos,gasto])
+  }
+
 
   return (
     <div className="container">
@@ -29,10 +39,14 @@ function App() {
             (
               <div className="row">
                 <div className="one-half column">
-                  <Formulario />
+                  <Formulario 
+                    agregarNuevoGasto={agregarNuevoGasto}
+                  />
                 </div>
                 <div className="one-half column">
-                  2  
+                  <Listado 
+                    gastos={gastos}
+                  /> 
                 </div>
               </div>
             )
